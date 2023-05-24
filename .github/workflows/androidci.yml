@@ -21,25 +21,34 @@ jobs:
 
       - run: flutter pub get
       - run: flutter build apk
-      - run: flutter clean
-      #- run: flutter build ios --release --no-codesign
-      - run: |
-          flutter build ios --no-codesign
-          cd build/ios/iphoneos
-          mkdir Payload
-          cd Payload
-          ln -s ../Runner.app
-          cd ..
-          zip -r app.ipa Payload
-
-      #- uses: actions/upload-artifact@v1
-       # name: release-apk
-          # path: build/app/outputs/flutter-apk/app-release.apk
-          # tag: v1.0.${{ github.run_number }}
-
-      - name: Push to Releases
-        uses: actions/upload-artifact@v1
+      
+      - uses: actions/upload-artifact@v1
         with:
-          artifacts: "build/app/outputs/apk/debug/*,build/ios/iphoneos/app.ipa"
+          name: release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          tag: v1.0.${{ github.run_number }}
+       
+
+
+    #  - run: flutter clean
+
+
+      #- run: flutter build ios --release --no-codesign
+      #or
+      # - run: |
+      #     flutter build ios --no-codesign
+      #     cd build/ios/iphoneos
+      #     mkdir Payload
+      #     cd Payload
+      #     ln -s ../Runner.app
+      #     cd ..
+      #     zip -r app.ipa Payload
+
+     
+
+      # - name: Push to Releases
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     artifacts: "build/app/outputs/apk/debug/*,build/ios/iphoneos/app.ipa"
   
          
